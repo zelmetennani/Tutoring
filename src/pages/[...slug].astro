@@ -1,49 +1,45 @@
 ---
-import type { Page } from 'types';
-import Layout from '@layouts/Layout.astro';
-import Cards from '@components/Cards.astro';
-import Cta from '@components/Cta.astro';
-import Hero from '@components/Hero.astro';
-import Logos from '@components/Logos.astro';
-import Testimonials from '@components/Testimonials.astro';
-import { fetchData, getPageById } from '@data/page';
 
-export async function getStaticPaths() {
-    const data = await fetchData();
-    return data.map((page: Page) => {
-        const slug = page.slug.current === '/' ? undefined : page.slug.current;
-        return {
-            params: { slug },
-            props: { id: page._id }
-        };
-    });
-}
-
-const { id } = Astro.props;
-const pages = await getPageById(id);
-const page: Page = pages.length ? pages[0] : null;
-
-const { _id, title, sections, metaTitle, metaDescription, socialImage } = page || {};
-
-const componentMap = {
-    cardsSection: Cards,
-    ctaSection: Cta,
-    heroSection: Hero,
-    logosSection: Logos,
-    testimonialsSection: Testimonials
-};
 ---
 
-{
-    page && (
-        <Layout title={metaTitle ?? title} description={metaDescription} image={socialImage}>
-            <div data-sb-object-id={_id}>
-                {sections?.length &&
-                    sections.map((section, idx) => {
-                        const Component = componentMap[section._type];
-                        return <Component {...section} data-sb-field-path={`sections.${idx}`} />;
-                    })}
-            </div>
-        </Layout>
-    )
-}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oak Park Library Tutors</title>
+    <link rel="stylesheet" href="/styles/globals.css" />
+  </head>
+  <body style="font-family: system-ui, sans-serif; margin: 0; background: #f8fafc; color: #222;">
+    <main style="max-width: 600px; margin: 3rem auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 16px #0001; padding: 2.5rem 2rem;">
+      <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; color: #2d6a4f;">Oak Park Library Tutors</h1>
+      <h2 style="font-size: 1.3rem; font-weight: 400; margin-bottom: 1.5rem; color: #555;">In-person K-12 Tutoring at the Oak Park Public Library</h2>
+      <p style="font-size: 1.1rem; margin-bottom: 2rem;">Hi! I'm a local cyber professional with a passion for helping kids succeed. I have experience tutoring and coaching students of all ages and backgrounds. If your child needs support in any K-12 subject, I'm here to help—right at the Oak Park Public Library.</p>
+      <form name="contact" method="POST" data-netlify="true" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+        <input type="hidden" name="form-name" value="contact" />
+        <label>
+          Your Name
+          <input type="text" name="name" required style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px; margin-top: 0.25rem;" />
+        </label>
+        <label>
+          Your Email
+          <input type="email" name="email" required style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px; margin-top: 0.25rem;" />
+        </label>
+        <label>
+          Student's Grade & Subject(s)
+          <input type="text" name="details" required placeholder="e.g. 7th grade, Math & Science" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px; margin-top: 0.25rem;" />
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="4" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px; margin-top: 0.25rem;"></textarea>
+        </label>
+        <button type="submit" style="background: #2d6a4f; color: #fff; border: none; border-radius: 6px; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer;">Send Inquiry</button>
+      </form>
+      <div style="font-size: 0.95rem; color: #555;">
+        <a href="https://www.linkedin.com/in/zelmetennani" target="_blank" rel="noopener" style="color: #2d6a4f; text-decoration: underline;">Connect with me on LinkedIn</a>
+      </div>
+    </main>
+    <footer style="text-align: center; font-size: 0.9rem; color: #888; margin-bottom: 1.5rem;">
+      &copy; Oak Park Library Tutors
+    </footer>
+  </body>
+</html>
