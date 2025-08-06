@@ -1,14 +1,13 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
-import sanity from '@sanity/astro';
-import { sanityConfig } from './src/utils/sanity-client';
 
 // https://astro.build/config
 export default defineConfig({
-    image: {
-        domains: ['cdn.sanity.io']
-    },
-    integrations: [sanity(sanityConfig)],
+    // image: {
+    //     domains: ['cdn.sanity.io']
+    // },
+    // Removed Sanity integration for static landing page
+    integrations: [],
     vite: {
         plugins: [tailwindcss()],
         server: {
